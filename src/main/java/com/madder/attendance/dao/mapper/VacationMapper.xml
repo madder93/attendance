@@ -4,9 +4,9 @@
 
     <!-- 新增请假记录 -->
     <insert id="insert" parameterType="com.madder.attendance.bean.TVacation" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `t_vacation` (`user_id`, `start_date`, `end_date`, `days`, `type`, `create_time`)
+        INSERT INTO `t_vacation` (`user_id`, `start_date`, `end_date`, `days`, `type`, `remark`, `create_time`)
         VALUES (#{userId,jdbcType=INTEGER}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP},
-        #{days,jdbcType=FLOAT}, #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+        #{days,jdbcType=FLOAT}, #{type,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
     </insert>
 
     <!-- 根据条件查询请假记录 -->

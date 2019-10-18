@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../resources/css/index.css" />
 </head>
 <body>
-    <div class="mainBox indexBox" style="padding-top: 20px;height: 250px;">
+    <div class="mainBox indexBox" style="padding-top: 20px;height: 280px;">
         <form class="layui-form subForm" id="overtimeForm"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
             <div class="layui-form-item">
                 <label class="layui-form-label">开始日期</label>
@@ -59,6 +59,12 @@
                     </select>
                 </div>
                 <div class="formFieldTip">加班到20:30算0.25天；加班到22:00算0.5天</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="text" name="remark" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
             </div>
 
             <div class="layui-form-item" style="margin-left:50px;">
@@ -121,13 +127,13 @@
                 if(data.value == '03'){   //工作日晚上加班
                     $("#dasyDiv").hide();
                     $("#ifChangeDiv").show();
-                    $(".indexBox").css("height", "300px");
+                    $(".indexBox").css("height", "330px");
                     $("#overtimeForm input[name='days']").val('');
                 }else{
                     $("#dasyDiv").show();
                     $("#ifChangeDiv").hide();
                     $("#changeDaysDiv").hide();
-                    $(".indexBox").css("height", "280px");
+                    $(".indexBox").css("height", "330px");
                     //算天数
                     var startDate = $("#startDate").val();
                     var endDate = $("#endDate").val();
@@ -144,10 +150,10 @@
             form.on('radio(ifChange)', function(data){
                 if(data.value == '01'){
                     $("#changeDaysDiv").show();
-                    $(".indexBox").css("height", "370px");
+                    $(".indexBox").css("height", "410px");
                 }else{
                     $("#changeDaysDiv").hide();
-                    $(".indexBox").css("height", "330px");
+                    $(".indexBox").css("height", "410px");
                 }
             });
 

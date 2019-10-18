@@ -184,6 +184,7 @@
                             return '';
                         }
                      }
+                    ,{field: 'remark', title: '备注', width:160}
                     ,{field: 'createTime', title: '创建时间', width:160}
                 ]]
                 ,parseData: function(res){ //res 即为原始返回的数据

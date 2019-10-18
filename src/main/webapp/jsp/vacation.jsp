@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../resources/css/index.css" />
 </head>
 <body>
-    <div class="mainBox indexBox" style="padding-top: 20px;height: 310px;">
+    <div class="mainBox indexBox" style="padding-top: 20px;height: 360px;">
         <form class="layui-form subForm" id="vacationForm"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
             <div class="layui-form-item">
                 <label class="layui-form-label">开始日期</label>
@@ -42,6 +42,12 @@
                     </select>
                 </div>
                 <div class="formFieldTip" style="width: 400px; margin-left: 55px;">请注意日期选择是否包含周末或节假日，如果包含，请手动减掉相应天数</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="text" name="remark" placeholder="请输入" autocomplete="off" class="layui-input">
+                </div>
             </div>
 
             <div class="layui-form-item" style="margin-left:50px;">

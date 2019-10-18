@@ -4,9 +4,10 @@
 
     <!-- 新增加班记录 -->
     <insert id="insert" parameterType="com.madder.attendance.bean.TOvertime" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `t_overtime` (`user_id`, `start_date`, `end_date`, `type`, `days`, `if_change`, `change_days`, `create_time`)
+        INSERT INTO `t_overtime` (`user_id`, `start_date`, `end_date`, `type`, `days`, `if_change`, `change_days`, `remark`, `create_time`)
         VALUES (#{userId,jdbcType=INTEGER}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP},
-        #{type,jdbcType=VARCHAR}, #{days,jdbcType=FLOAT}, #{ifChange,jdbcType=VARCHAR}, #{changeDays,jdbcType=FLOAT}, #{createTime,jdbcType=TIMESTAMP})
+        #{type,jdbcType=VARCHAR}, #{days,jdbcType=FLOAT}, #{ifChange,jdbcType=VARCHAR}, #{changeDays,jdbcType=FLOAT},
+        #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
     </insert>
 
     <!-- 根据条件查询加班记录 -->
@@ -31,7 +32,7 @@
     <select id="findAllRecordList" resultType="com.madder.attendance.bean.vo.OvertimeVo" parameterType="java.util.Map">
         select * from (
             select o.user_id, u.user_no, u.user_name, '01' as category, o.start_date, o.end_date, o.type, o.days,
-            o.if_change, o.change_days, o.create_time
+            o.if_change, o.change_days, o.create_time, o.remark
             from t_overtime o
             left join t_user u on u.user_id = o.user_id
             <where>
@@ -52,7 +53,7 @@
             union
 
             select v.user_id, u.user_no, u.user_name, '02' as category, v.start_date, v.end_date, v.type, v.days,
-            null as if_change, null as change_days, v.create_time
+            null as if_change, null as change_days, v.create_time, v.remark
             from t_vacation v
             left join t_user u on u.user_id = v.user_id
             <where>

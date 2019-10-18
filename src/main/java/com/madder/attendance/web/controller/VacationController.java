@@ -104,12 +104,13 @@ public class VacationController {
     public ResponseData findVacationList(HttpServletRequest request, HttpServletResponse response){
         ResponseData responseData = ResponseData.SUCCESS();
         try{
-            /*String sessionId = UserSessionUtil.getUserSessionId(request);
+            String sessionId = UserSessionUtil.getUserSessionId(request);
             UserSessionVo userSessionVo = userService.getSession(sessionId);
-            Integer userId = userSessionVo.getUser().getUserId();*/
+            Integer userId = userSessionVo.getUser().getUserId();
+            //Integer userId = 1;
 
             TVacation params = new TVacation();
-            params.setUserId(1);
+            params.setUserId(userId);
 
             SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
             Calendar c = Calendar.getInstance();
