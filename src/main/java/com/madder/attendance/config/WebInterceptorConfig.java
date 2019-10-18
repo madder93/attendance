@@ -27,6 +27,6 @@ public class WebInterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //登录校验，添加不用拦截的路径
         registry.addInterceptor(getLoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/","/index/toLogin","/index/login",
-                "/index/toResetPwd","/index/updatePwd","/resources/**","/index/index","/overtime/**","/vacation/**","/attendance/**");
+                "/index/toResetPwd","/index/updatePwd","/resources/**","/attendance/**");
     }
 }
