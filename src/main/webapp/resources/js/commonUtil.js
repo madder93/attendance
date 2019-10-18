@@ -4,7 +4,7 @@ function getMonthFirstDay(){
     var year = now.getFullYear();
     var month = now.getMonth();
     var monthFirstDate = new Date(year, month, 1);
-    return dateFmt('yyyy-M-d', monthFirstDate);
+    return dateFmt('yyyy-MM-dd', monthFirstDate);
 }
 
 //获取当前月的最后一天
@@ -13,7 +13,7 @@ function getMonthLastDay(){
     var year = now.getFullYear();
     var month = (now.getMonth() + 1);
     var monthEndDate = new Date(year, month, 0);
-    return dateFmt('yyyy-M-d', monthEndDate);
+    return dateFmt('yyyy-MM-dd', monthEndDate);
 }
 
 //日期格式化

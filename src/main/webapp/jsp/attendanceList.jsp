@@ -77,6 +77,13 @@
         <table id="attendanceTable" lay-filter="attendanceTableFilter"></table>
     </div>
 
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="exportRecord">导出出勤记录</button>
+            <button class="layui-btn layui-btn-sm" lay-event="exportExcel">导出考勤表</button>
+        </div>
+    </script>
+
     <script>
         layui.use(['layer','table','form','laydate'], function() {
             var layer = layui.layer;
@@ -85,13 +92,18 @@
             var table = layui.table;
             var laydate = layui.laydate;
 
+            var firstDay = getMonthFirstDay();
+            var lasterDay = getMonthLastDay();
+
             laydate.render({
                 elem: '#startDate' //指定元素
                 ,type: 'date'
+                ,value: firstDay
             });
             laydate.render({
                 elem: '#endDate' //指定元素
                 ,type: 'date'
+                ,value: lasterDay
             });
 
             var params =  serializeJson("searchForm");//自动将form表单封装成json
@@ -103,6 +115,8 @@
                 ,url: '${basePath}/attendance/findAllRecordList' //数据接口
                 ,method:'post'
                 ,where:{params:params}
+                ,toolbar: '#toolbarDemo'
+                ,defaultToolbar: []
                 //,page: true //开启分页
                 ,cols: [[ //表头
                     {field: 'id', title: 'id', hide:true}
@@ -201,6 +215,7 @@
                 form.render('select');
             });
 
+            //查询按钮事件
             var active = {
                 search: function(){
                     var params =  serializeJson("searchForm");//自动将form表单封装成json
@@ -220,6 +235,16 @@
             $('.layui-btn-container button').on('click', function(){
                 var type = $(this).data('type');
                 active[type] ? active[type].call(this) : '';
+            });
+
+            //头工具栏事件
+            table.on('toolbar(attendanceTableFilter)', function(obj){
+                //var checkStatus = table.checkStatus(obj.config.id);
+                if(obj.event == 'exportRecord'){
+                    alert(1);
+                }else if(obj.event == 'exportExcel'){
+                    alert(2);
+                }
             });
         });
     </script>
