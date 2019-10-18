@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.madder.attendance.dao.OvertimeDao">
+
+    <!-- 新增加班记录 -->
+    <insert id="insert" parameterType="com.madder.attendance.bean.TOvertime" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `t_overtime` (`user_id`, `start_date`, `end_date`, `type`, `days`, `if_change`, `change_days`, `create_time`)
+        VALUES (#{userId,jdbcType=INTEGER}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP},
+        #{type,jdbcType=VARCHAR}, #{days,jdbcType=FLOAT}, #{ifChange,jdbcType=VARCHAR}, #{changeDays,jdbcType=FLOAT}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <!-- 根据条件查询加班记录 -->
+    <select id="findOvertimeList" resultType="com.madder.attendance.bean.TOvertime" parameterType="com.madder.attendance.bean.TOvertime">
+        select *
+        from t_overtime
+        <where>
+            <if test="userId != null and userId != ''">
+              and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="startDate != null">
+              and DATE_FORMAT(start_date,'%Y-%m-%d') &gt;= DATE_FORMAT(#{startDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+            </if>
+            <if test="endDate != null">
+              and DATE_FORMAT(end_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+            </if>
+        </where>
+        order by start_date
+    </select>
+
+    <!-- 根据条件查询所有加班/请假记录 -->
+    <select id="findAllRecordList" resultType="com.madder.attendance.bean.vo.OvertimeVo" parameterType="java.util.Map">
+        select * from (
+            select o.user_id, u.user_no, u.user_name, '01' as category, o.start_date, o.end_date, o.type, o.days,
+            o.if_change, o.change_days, o.create_time
+            from t_overtime o
+            left join t_user u on u.user_id = o.user_id
+            <where>
+                <if test="params.userNo != null and params.userNo != ''">
+                    and u.user_no = like concat('%', #{params.userNo,jdbcType=VARCHAR}, '%')
+                </if>
+                <if test="params.userName != null and params.userName != ''">
+                    and u.user_name like concat('%', #{params.userName,jdbcType=VARCHAR}, '%')
+                </if>
+                <if test="params.startDate != null and params.startDate != ''">
+                    and DATE_FORMAT(o.start_date,'%Y-%m-%d') &gt;= DATE_FORMAT(#{params.startDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+                </if>
+                <if test="params.endDate != null and params.endDate != ''">
+                    and DATE_FORMAT(o.end_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{params.endDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+                </if>
+            </where>
+
+            union
+
+            select v.user_id, u.user_no, u.user_name, '02' as category, v.start_date, v.end_date, v.type, v.days,
+            null as if_change, null as change_days, v.create_time
+            from t_vacation v
+            left join t_user u on u.user_id = v.user_id
+            <where>
+                <if test="params.userNo != null and params.userNo != ''">
+                    and u.user_no = like concat('%', #{params.userNo,jdbcType=VARCHAR}, '%')
+                </if>
+                <if test="params.userName != null and params.userName != ''">
+                    and u.user_name like concat('%', #{params.userName,jdbcType=VARCHAR}, '%')
+                </if>
+                <if test="params.startDate != null and params.startDate != ''">
+                    and DATE_FORMAT(v.start_date,'%Y-%m-%d') &gt;= DATE_FORMAT(#{params.startDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+                </if>
+                <if test="params.endDate != null and params.endDate != ''">
+                    and DATE_FORMAT(v.end_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{params.endDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+                </if>
+            </where>
+        ) t
+        <where>
+            <if test="params.category != null and params.category != ''">
+                and t.category = #{params.category,jdbcType=VARCHAR}
+            </if>
+            <if test="params.type != null and params.type != ''">
+                and t.type = #{params.type,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by t.user_no, t.category, t.create_time
+    </select>
+</mapper>

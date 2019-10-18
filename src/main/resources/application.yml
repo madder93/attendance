@@ -1,0 +1,19 @@
+server:
+    port: 8888
+#    servlet:
+#        jsp-servlet:
+#            init-parameters:
+#                development: true
+spring:
+    application:
+        name: attendance
+    devtools:
+        restart:
+            enabled: true
+            additional-paths: src/main/java
+            exclude: webapp/**
+logging:
+    level:
+        root: INFO
+        com.madder: DEBUG
+        org.springframework: WARN

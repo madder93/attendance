@@ -1,0 +1,58 @@
+@charset "utf-8";
+
+.mainBox{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    margin: auto;
+    border: 2px dashed #e9e7e7;
+    border-radius: 20px;
+}
+
+.indexBox{
+    width: 500px;
+    height: 300px;
+}
+
+.btn{
+    width: 80px;
+    height:40px;
+    background-color: #fff;
+    border: 1px solid #666;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.btn:hover{
+    box-shadow: 5px 5px 3px #d8d0d0;
+}
+
+.subForm{
+    width: 90%;
+    margin-top: 20px;
+    margin-left: 15px;
+}
+.subForm .layui-btn{
+    margin-right: 10px;
+}
+
+.formFieldTip{
+    width: 300px;
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    margin-left: 115px;
+}
+
+.link{
+    cursor: pointer;
+    color: #009688a8;
+}
+
+.tableBox{
+    width: 900px;
+    height: auto;
+    min-height: 300px;
+    margin: auto;
+}

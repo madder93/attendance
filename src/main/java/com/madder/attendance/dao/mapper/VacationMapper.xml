@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.madder.attendance.dao.VacationDao">
+
+    <!-- 新增请假记录 -->
+    <insert id="insert" parameterType="com.madder.attendance.bean.TVacation" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `t_vacation` (`user_id`, `start_date`, `end_date`, `days`, `type`, `create_time`)
+        VALUES (#{userId,jdbcType=INTEGER}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP},
+        #{days,jdbcType=FLOAT}, #{type,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <!-- 根据条件查询请假记录 -->
+    <select id="findVacationList" resultType="com.madder.attendance.bean.TVacation" parameterType="com.madder.attendance.bean.TVacation">
+        select *
+        from t_vacation
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="startDate != null">
+                and DATE_FORMAT(start_date,'%Y-%m-%d') &gt;= DATE_FORMAT(#{startDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+            </if>
+            <if test="endDate != null">
+                and DATE_FORMAT(end_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{endDate,jdbcType=TIMESTAMP},'%Y-%m-%d')
+            </if>
+        </where>
+        order by start_date
+    </select>
+</mapper>

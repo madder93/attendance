@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.madder.attendance.dao.UserDao">
+
+    <!-- 根据条件查询用户 -->
+    <select id="getUserByCond" resultType="com.madder.attendance.bean.TUser" parameterType="com.madder.attendance.bean.TUser">
+        select user_id, user_no, user_name
+        from t_user
+        <where>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!-- 修改密码 -->
+    <update id="updatePwd" parameterType="com.madder.attendance.bean.TUser">
+        update t_user set password = #{password,jdbcType=VARCHAR} where user_name = #{userName,jdbcType=VARCHAR}
+    </update>
+</mapper>
