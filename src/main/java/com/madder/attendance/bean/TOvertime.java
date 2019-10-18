@@ -58,6 +58,11 @@ public class TOvertime implements Serializable {
     private Float changeDays;
 
     /**
+     * 备注事项
+     */
+    private String remark;
+
+    /**
      * 创建日期
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
@@ -133,5 +138,13 @@ public class TOvertime implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
